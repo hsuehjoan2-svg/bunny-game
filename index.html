@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>小兔子的台南補給站</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      padding: 24px 16px;
+      background: #fff5ef;
+      color: #664c43;
+      font-family: "Microsoft JhengHei", sans-serif;
+    }
+
+    main {
+      width: 100%;
+      max-width: 420px;
+      padding: 36px 24px;
+      text-align: center;
+      background: #fffdf9;
+      border: 2px solid #f5dfd3;
+      border-radius: 32px;
+      box-shadow: 0 16px 50px #be8d7220;
+    }
+
+    .tag {
+      color: #ae7c68;
+      font-size: 13px;
+      letter-spacing: 3px;
+    }
+
+    h1 { font-size: 25px; line-height: 1.5; }
+
+    p { line-height: 1.9; }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:focus-visible {
+      outline: 3px solid #aa6f59;
+      outline-offset: 5px;
+    }
+
+    #bunny {
+      display: block;
+      margin: 20px auto;
+      padding: 12px 35px;
+      border: 0;
+      border-radius: 50%;
+      background: #fff0e6;
+      font-size: 90px;
+      transition: transform 0.15s;
+    }
+
+    #bunny:active { transform: scale(0.9) rotate(-8deg); }
+
+    #hearts {
+      min-height: 30px;
+      color: #d77d87;
+      font-size: 25px;
+      letter-spacing: 6px;
+    }
+
+    #message {
+      display: grid;
+      place-items: center;
+      min-height: 125px;
+      padding: 18px;
+      background: #fff3ed;
+      border-radius: 18px;
+      line-height: 1.9;
+    }
+
+    .action {
+      padding: 12px 20px;
+      border: 0;
+      border-radius: 30px;
+      background: #b67f68;
+      color: white;
+    }
+
+    .moods {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin: 20px 0;
+    }
+
+    .moods button {
+      padding: 10px 14px;
+      background: white;
+      color: #805e50;
+      border: 1px solid #ead1c4;
+      border-radius: 24px;
+    }
+
+    #letter {
+      margin-top: 24px;
+      padding: 24px;
+      text-align: left;
+      background: #fff8e7;
+      border-radius: 16px;
+    }
+
+    #letter[hidden], #openLetter[hidden] { display: none; }
+
+    .small { font-size: 12px; color: #a08375; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="tag">FOR MY LITTLE BUNNY</div>
+    <h1>小兔子的<br>台南補給站</h1>
+    <p>新生活慢慢來，<br>這裡永遠有一份留給你的加油。</p>
+
+    <button id="bunny" aria-label="點小兔子，收集愛心">🐰</button>
+    <p class="small">點點小兔子，收集 5 顆愛心</p>
+
+    <div id="hearts" aria-label="已收集 0 顆愛心">♡♡♡♡♡</div>
+    <p id="message" aria-live="polite">
+      有一些話，想慢慢說給你聽。
+    </p>
+
+    <button id="openLetter" class="action" hidden>
+      💌 打開給你的信
+    </button>
+
+    <section id="letter" hidden>
+      <strong>給我的小兔子：</strong>
+      <p>
+        要去台南開始新的工作了，
+        你可能會期待，也可能有一點不安。
+        不用急著適應所有事情，一天進步一點點就很好。
+      </p>
+      <p>
+        記得好好吃飯、好好睡覺。
+        開心的事可以跟我分享，不開心的事也可以。
+        不用整理好心情才來找我。
+      </p>
+      <p>
+        我會想你，也會替你加油。
+        等見面的時候，再給你一個大大的抱抱。
+      </p>
+      <p>愛你的我 ♡</p>
+    </section>
+
+    <p>今天的你，需要哪一種補給？</p>
+    <div class="moods">
+      <button data-mood="tired">上班好累</button>
+      <button data-mood="miss">有點想你</button>
+      <button data-mood="hug">需要抱抱</button>
+    </div>
+
+    <p class="small">距離有一點遠，喜歡你這件事沒有變。</p>
+  </main>
+
+  <script>
+    // 修改這裡，就能換成你想說的鼓勵。
+    const encouragements = [
+      "第一顆愛心：願意踏出這一步的你，已經很勇敢了。",
+      "第二顆愛心：剛開始不熟悉很正常，慢慢學就好。",
+      "第三顆愛心：工作很重要，你的心情也很重要。",
+      "第四顆愛心：今天辛苦了，記得吃一頓喜歡的晚餐。",
+      "第五顆愛心：不管今天過得怎麼樣，都有一個我喜歡著你。"
+    ];
+
+    const moodMessages = {
+      tired: "今天先到這裡就好。吃飽、洗個熱水澡，剩下的明天再說。",
+      miss: "我也想你了。想聽我的聲音，就打給我吧 ♡",
+      hug: "抱抱配送中……先把自己抱緊一下，下次見面我再補給你。"
+    };
+
+    let count = 0;
+    const message = document.querySelector("#message");
+    const hearts = document.querySelector("#hearts");
+    const openLetter = document.querySelector("#openLetter");
+    const letter = document.querySelector("#letter");
+
+    document.querySelector("#bunny").addEventListener("click", () => {
+      if (count < encouragements.length) {
+        message.textContent = encouragements[count];
+        count++;
+        hearts.textContent = "♥".repeat(count) + "♡".repeat(5 - count);
+        hearts.setAttribute("aria-label", `已收集 ${count} 顆愛心`);
+
+        if (count === 5) openLetter.hidden = false;
+      } else {
+        message.textContent = "愛心已經集滿，但給你的喜歡還有很多很多。";
+      }
+    });
+
+    openLetter.addEventListener("click", () => {
+      letter.hidden = !letter.hidden;
+      openLetter.textContent = letter.hidden
+        ? "💌 再讀一次信"
+        : "收好這封信 ♡";
+
+      if (!letter.hidden) {
+        letter.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+    });
+
+    document.querySelectorAll("[data-mood]").forEach(button => {
+      button.addEventListener("click", () => {
+        message.textContent = moodMessages[button.dataset.mood];
+      });
+    });
+  </script>
+</body>
+</html>
